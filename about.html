@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Hi-TV Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind slate-50 */
+        }
+        .accent-gold { color: #D97706; }
+        .bg-accent-gold { background-color: #D97706; }
+        .hover\:bg-accent-gold-dark:hover { background-color: #B45309; }
+        .border-accent-gold { border-color: #D97706; }
+
+        .about-title-main {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #1f2937; /* gray-800 */
+            text-align: center;
+            margin-bottom: 2rem; /* mb-8 */
+        }
+        .about-section-title { /* For "About Company" */
+            font-family: 'Times New Roman', Times, serif; /* Example serif font */
+            font-size: 3rem; /* text-5xl or larger */
+            font-weight: 600; /* font-semibold */
+            color: #b17544; /* Matching the screenshot's brown/gold color */
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        .about-text {
+            font-size: 1rem; /* text-base */
+            color: #4b5563; /* gray-600 */
+            line-height: 1.75; /* leading-relaxed */
+            text-align: justify;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .shoalter-logo {
+            max-width: 200px; 
+            height: auto;
+        }
+         .hktv-speech-logo {
+            max-width: 220px; 
+            height: auto;
+         }
+         .about-content-section {
+            background-color: white;
+            padding: 2rem; /* p-8 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-md */
+            margin-bottom: 3rem; /* Add space before the new section */
+         }
+         .corporate-structure-section {
+            background-color: white;
+            padding: 2rem; /* p-8 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-md */
+            margin-top: 3rem; /* Space above this section */
+         }
+         .corporate-structure-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 600; /* font-semibold */
+            color: #1f2937; /* gray-800 */
+            text-align: center;
+            margin-bottom: 2rem; /* mb-8 */
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #D97706; /* Accent gold border */
+            display: inline-block; /* To make border only under text */
+         }
+         .corporate-structure-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #e5e7eb; /* gray-200 border for the image */
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+         }
+
+
+        /* User & Cart Dropdown Styles */
+        .user-dropdown-container { min-width: 260px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; }
+        .user-dropdown-container .main-menu-link, .user-dropdown-container .sign-out-button { display: flex; align-items: center; justify-content: space-between; padding: 0.625rem 1rem; font-size: 0.875rem; color: #374151; transition: background-color 0.2s ease-in-out; text-decoration: none; width: 100%; box-sizing: border-box; }
+        .user-dropdown-container .main-menu-link:hover, .user-dropdown-container .sign-out-button:hover { background-color: #FDE68A; }
+        .user-dropdown-container .main-menu-link > span > i:first-child, .user-dropdown-container .sign-out-button > i:first-child { margin-right: 0.75rem; width: 18px; text-align: center; color: #9CA3AF; }
+        .user-dropdown-header { padding: 0.75rem 1rem; font-weight: 600; color: #1f2937; border-bottom: 1px solid #FCD34D; }
+        .user-dropdown-content { padding: 0.5rem 0; }
+        .user-dropdown-container .active-main-link, .main-menu-item-container:hover > .main-menu-link { background-color: #FCD34D !important; color: #1f2937 !important; font-weight: 500; }
+        .user-dropdown-container .active-main-link > span > i, .user-dropdown-container .active-main-link .submenu-arrow, .main-menu-item-container:hover > .main-menu-link > span > i, .main-menu-item-container:hover > .main-menu-link .submenu-arrow { color: #1f2937 !important; }
+        .user-dropdown-container .main-menu-link .submenu-arrow { font-size: 0.65em; color: #9CA3AF; margin-left: auto; transform: scaleX(-1); }
+        .submenu { position: absolute; left: 0; transform: translateX(-100%); top: -1px; margin-left: -1px; min-width: 200px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); z-index: 30; padding: 0.5rem 0; visibility: hidden; opacity: 0; transition: visibility 0s linear 0.1s, opacity 0.1s linear; }
+        .main-menu-item-container:hover > .submenu { visibility: visible; opacity: 1; transition-delay: 0s; }
+        .submenu a { display: block; padding: 0.5rem 1rem; font-size: 0.875rem; color: #374151; white-space: nowrap; text-decoration: none; }
+        .submenu a:hover { background-color: #FDE68A; }
+        .submenu .active-submenu-link { background-color: #FCD34D; color: #1f2937; font-weight: 500; }
+        .user-dropdown-footer { border-top: 1px solid #FCD34D; padding: 0.5rem; }
+        .sign-out-button { width: 100%; text-align: left; }
+
+        .cart-dropdown-container { width: 360px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; }
+        .cart-item { display: flex; align-items: center; padding: 0.75rem; border-bottom: 1px solid #FDE68A; } .cart-item:last-child { border-bottom: none; }
+        .cart-item-image { width: 64px; height: 64px; object-fit: cover; border-radius: 0.375rem; margin-right: 0.75rem; }
+        .cart-item-details { flex-grow: 1; } .cart-item-name { font-size: 0.875rem; font-weight: 500; color: #1f2937; }
+        .cart-item-price { font-size: 0.875rem; color: #D97706; margin-top: 0.25rem; }
+        .cart-item-quantity { display: flex; align-items: center; margin-top: 0.5rem; }
+        .cart-item-quantity button { background-color: #FCD34D; color: #B45309; border: none; width: 24px; height: 24px; border-radius: 9999px; font-weight: bold; cursor: pointer; }
+        .cart-item-quantity span { margin: 0 0.5rem; font-size: 0.875rem; }
+        .cart-item-remove { font-size: 0.75rem; color: #EF4444; background: none; border: none; cursor: pointer; margin-top: 0.25rem; }
+        .cart-item-remove:hover { text-decoration: underline; }
+        .cart-summary { padding: 0.75rem; border-top: 1px solid #FCD34D; }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.75rem; }
+        .checkout-button-link { display: block; width: 100%; background-color: #D97706; color: white !important; text-decoration: none !important; padding: 0.625rem; border-radius: 0.5rem; text-align: center; font-weight: 500; transition: background-color 0.2s; }
+        .checkout-button-link:hover { background-color: #B45309; color: white !important; }
+        .empty-cart-message { padding: 1.5rem; text-align: center; color: #6B7280; }
+
+    </style>
+</head>
+<body>
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="home.html" class="text-2xl font-bold accent-gold">Hi-TV</a>
+                </div>
+                <div class="hidden md:flex flex-grow max-w-xl mx-4">
+                    <div class="relative w-full">
+                        <input type="search" placeholder="Search products..." class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                        <button class="absolute inset-y-0 right-0 flex items-center justify-center px-3 bg-accent-gold text-white rounded-r-full hover:bg-accent-gold-dark focus:outline-none"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:accent-gold font-medium">HOME</a>
+                    <a href="shop.html" class="text-gray-700 hover:accent-gold font-medium">SHOP</a>
+                    <a href="about.html" class="text-amber-600 border-b-2 border-amber-600 font-medium pb-1">ABOUT</a>
+                    <a href="home.html#contact" class="text-gray-700 hover:accent-gold font-medium">CONTACT</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative"> <button id="userMenuButton" class="text-gray-600 hover:accent-gold focus:outline-none"><i class="fas fa-user text-xl"></i></button> <div id="userDropdown" class="absolute right-0 mt-2 shadow-xl z-20 hidden"></div> </div>
+                    <div class="relative"> <button id="cartIconButton" class="text-gray-600 hover:accent-gold relative"><i class="fas fa-shopping-bag text-xl"></i><span id="cartItemCountBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">0</span></button> <div id="cartDropdown" class="absolute right-0 mt-2 shadow-xl z-20 hidden cart-dropdown-container"></div> </div>
+                </div>
+                <div class="md:hidden"> <button id="mobileMenuButton" class="text-gray-600 hover:accent-gold focus:outline-none"><i class="fas fa-bars text-xl"></i></button> </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <nav class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="home.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">HOME</a>
+                <a href="shop.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">SHOP</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 bg-amber-50">ABOUT</a>
+                <a href="home.html#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">CONTACT</a>
+            </nav>
+            <div class="px-4 pb-3"> <div class="relative w-full"> <input type="search" placeholder="Search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"> <button class="absolute inset-y-0 right-0 flex items-center justify-center px-3 bg-accent-gold text-white rounded-r-full hover:bg-accent-gold-dark focus:outline-none"><i class="fas fa-search"></i></button> </div> </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="about-content-section">
+            <h1 class="about-title-main">About Us</h1>
+
+            <div class="grid md:grid-cols-3 gap-8 items-start mb-12">
+                <div class="md:col-span-2">
+                    <h2 class="about-section-title">About Company</h2>
+                    <p class="about-text mb-4">
+                        Hong Kong Technology Discovery Limited is a listed company in Hong Kong (HKEx listing number: 1137).
+                    </p>
+                    <p class="about-text">
+                        Founded in 1992, the Group has extensive and successful experience in opening up the telecommunications market and applying and popularizing advanced technologies. The Group is actively developing its e-commerce business in Hong Kong. The largest 24-hour online shopping mall in Hong Kong, "HKTVmall", provides Hong Kong people with one-stop services, including online shopping platforms, marketing and digital marketing, big data analysis, smart logistics distribution and store marketing, etc. It also integrates business operations, trade, retail, finance and daily life into a digital online platform to build a unique digital ecosystem.
+                    </p>
+                </div>
+                <div class="logo-container md:mt-16">
+                    <img src="https://placehold.co/200x100/e2e8f0/9ca3af?text=Shoalter+Tech+Logo" alt="Shoalter Technology Ltd. Logo" class="shoalter-logo">
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <div class="logo-container order-last md:order-first">
+                    <img src="https://placehold.co/220x150/a7f3d0/166534?text=HKTV+Logo" alt="HKTV Logo" class="hktv-speech-logo">
+                </div>
+                <div class="md:col-span-2 about-text">
+                    <p>
+                        At the same time, the Group is developing a number of new exploratory and technological businesses, including the fresh food fast delivery service "Market Meals of the Day", the global purchasing platform "Everuts", fully automated retail stores and systems, and life science projects, making different attempts with an innovative spirit to maintain the Group's unique advantages.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section class="corporate-structure-section">
+            <div class="text-center mb-8">
+                 <h2 class="corporate-structure-title">Corporate Structure</h2>
+            </div>
+            <div>
+                <img src="https://placehold.co/800x600/e0e0e0/777?text=Corporate+Structure+Chart" alt="Corporate Structure of Hi-TV / HKTV Group" class="corporate-structure-image">
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Hi-TV Collection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Basic User Menu and Cart Dropdown Logic (copied from home.html)
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const cartIconButton = document.getElementById('cartIconButton');
+        const cartDropdown = document.getElementById('cartDropdown');
+        const cartItemCountBadge = document.getElementById('cartItemCountBadge');
+
+        let isUserLoggedInAbout = localStorage.getItem('isUserLoggedIn') === 'true';
+        let userNameAbout = localStorage.getItem('userName') || "Guest";
+
+        function renderUserDropdownAbout() {
+            if (!userDropdown) return;
+            userDropdown.innerHTML = ''; 
+            userDropdown.className = 'absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden'; 
+            if (isUserLoggedInAbout) {
+                userDropdown.innerHTML = `
+                    <div class="px-4 py-2 text-sm text-gray-700">Hello, ${userNameAbout}</div>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Account</a>
+                    <a href="#" id="signOutButtonAbout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>`;
+                const signOutButtonAbout = document.getElementById('signOutButtonAbout');
+                if (signOutButtonAbout) {
+                    signOutButtonAbout.addEventListener('click', () => {
+                        localStorage.removeItem('isUserLoggedIn'); localStorage.removeItem('userName');
+                        isUserLoggedInAbout = false; userNameAbout = "Guest";
+                        renderUserDropdownAbout(); userDropdown.classList.add('hidden');
+                    });
+                }
+            } else {
+                userDropdown.innerHTML = `<a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign In / Log In</a>`;
+            }
+        }
+        
+        if (userMenuButton) { userMenuButton.addEventListener('click', (event) => { renderUserDropdownAbout(); userDropdown.classList.toggle('hidden'); event.stopPropagation(); }); }
+        if (mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', (event) => { mobileMenu.classList.toggle('hidden'); event.stopPropagation(); }); }
+
+        let cartItemsAbout = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        function updateCartBadgeAbout() {
+            const totalItems = cartItemsAbout.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartItemCountBadge) { cartItemCountBadge.textContent = totalItems; cartItemCountBadge.classList.toggle('hidden', totalItems === 0); }
+        }
+        function renderCartDropdownAbout() {
+            if (!cartDropdown) return;
+            cartDropdown.innerHTML = '';
+            cartDropdown.className = 'cart-dropdown-container absolute right-0 mt-2 shadow-xl z-20 hidden p-4';
+            if (cartItemsAbout.length === 0) { cartDropdown.innerHTML = '<p class="empty-cart-message">Your cart is empty.</p>'; return; }
+            let total = 0;
+            cartItemsAbout.forEach(item => {
+                total += item.price * item.quantity;
+                const itemHTML = `
+                    <div class="cart-item">
+                        <img src="${item.image || 'https://placehold.co/64x64/ccc/fff?text=No+Img'}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)} (x${item.quantity})</div>
+                        </div>
+                    </div>`;
+                cartDropdown.innerHTML += itemHTML;
+            });
+            cartDropdown.innerHTML += `<div class="cart-summary">
+                <div class="cart-total"><span>Total:</span><span>$${total.toFixed(2)}</span></div>
+                <a href="check pay.html" class="checkout-button-link">Checkout</a>
+                </div>`;
+        }
+        if (cartIconButton) { cartIconButton.addEventListener('click', (event) => { renderCartDropdownAbout(); cartDropdown.classList.toggle('hidden'); event.stopPropagation(); }); }
+        
+        document.addEventListener('click', function(event) {
+            if (userDropdown && !userDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) { userDropdown.classList.add('hidden'); }
+            if (cartDropdown && !cartDropdown.classList.contains('hidden') && !cartIconButton.contains(event.target) && !cartDropdown.contains(event.target)) { cartDropdown.classList.add('hidden'); }
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) { mobileMenu.classList.add('hidden'); }
+        });
+
+        // Initial load
+        updateCartBadgeAbout();
+        renderUserDropdownAbout(); 
+    </script>
+</body>
+</html>
+

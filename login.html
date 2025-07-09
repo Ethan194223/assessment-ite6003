@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign In - Hi-TV Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .accent-gold { color: #D97706; }
+        .bg-accent-gold { background-color: #D97706; }
+        .hover\:bg-accent-gold-dark:hover { background-color: #B45309; }
+        .border-accent-gold { border-color: #D97706; }
+        .form-container { background-color: #FEF3C7; }
+        .form-input { background-color: #FFFBEB; border: 1px solid #FCD34D; }
+        .social-login-button-facebook { background-color: #3b5998; }
+        .social-login-button-google { background-color: #DB4437; }
+        .login-tab-active { background-color: #D97706; color: white; border-color: #D97706; }
+        .login-tab-inactive { background-color: white; color: #D97706; border-color: #FCD34D; }
+        .login-tab-inactive:hover { background-color: #FEFCE8; }
+        .country-code-button { min-width: 100px; }
+        .country-code-dropdown { max-height: 200px; overflow-y: auto; }
+        .country-code-dropdown::-webkit-scrollbar { width: 6px; }
+        .country-code-dropdown::-webkit-scrollbar-thumb { background-color: #FCD34D; border-radius: 3px; }
+        .country-code-dropdown::-webkit-scrollbar-track { background-color: #FFFBEB; }
+        .country-flag { font-size: 1.2em; margin-right: 0.5rem; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0"><a href="home.html" class="text-2xl font-bold accent-gold">Hi-TV</a></div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="home.html" class="text-gray-700 hover:accent-gold font-medium">HOME</a>
+                    <a href="home.html#shop" class="text-gray-700 hover:accent-gold font-medium">SHOP</a>
+                    <a href="home.html#about" class="text-gray-700 hover:accent-gold font-medium">ABOUT</a>
+                    <a href="home.html#contact" class="text-gray-700 hover:accent-gold font-medium">CONTACT</a>
+                </nav>
+                <div class="flex items-center space-x-4"><a href="home.html#cart" class="text-gray-600 hover:accent-gold relative"><i class="fas fa-shopping-bag text-xl"></i></a></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
+                <div class="w-full md:w-1/2 p-6 sm:p-8 rounded-lg shadow-lg form-container">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">LOGIN</h2>
+                    <div class="mb-4 flex rounded-md shadow-sm">
+                        <button id="loginPhoneTab" class="flex-1 px-4 py-2 border border-r-0 rounded-l-md focus:outline-none login-tab-active">PHONE NUMBER</button>
+                        <button id="loginEmailTab" class="flex-1 px-4 py-2 border rounded-r-md focus:outline-none login-tab-inactive">EMAIL ADDRESS</button>
+                    </div>
+                    <form id="loginForm" method="POST"> <div id="phoneLoginGroup">
+                            <div class="mb-4">
+                                <label for="login-phone-input" class="block text-sm font-medium text-gray-700 mb-1">PHONE NUMBER</label>
+                                <div class="flex">
+                                    <div class="relative">
+                                        <button type="button" id="loginCountryCodeButton" class="country-code-button inline-flex items-center justify-center px-3 py-2.5 rounded-l-md border border-r-0 border-amber-400 bg-amber-100 text-gray-700 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500">
+                                            <span class="country-flag">🇭🇰</span><span>+852</span><i class="fas fa-chevron-down ml-2 text-xs"></i>
+                                        </button>
+                                        <div id="loginCountryCodeDropdown" class="country-code-dropdown hidden absolute z-10 mt-1 w-auto min-w-max bg-white rounded-md shadow-lg border border-amber-200"></div>
+                                    </div>
+                                    <input type="tel" name="login-phone" id="login-phone-input" class="form-input flex-1 block w-full rounded-none rounded-r-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500" placeholder="Enter phone number">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="emailLoginGroup" class="hidden">
+                            <div class="mb-4">
+                                <label for="login-email-input" class="block text-sm font-medium text-gray-700 mb-1">EMAIL ADDRESS</label>
+                                <input type="email" name="login-email" id="login-email-input" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500" placeholder="Enter your email address">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">PASSWORD:</label>
+                            <input type="password" name="login-password" id="login-password" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="w-full bg-accent-gold hover:bg-accent-gold-dark text-white font-semibold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 mb-3">
+                            LOGIN IN
+                        </button>
+                        <div class="text-center mb-4"><a href="#" class="text-sm text-amber-700 hover:text-amber-800 hover:underline">FORGOT PASSWORD?</a></div>
+                        <div class="relative flex items-center justify-center mb-4">
+                            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-400"></div></div>
+                            <div class="relative px-2 bg-transparent text-sm text-gray-500" style="background-color: #FEF3C7;">OR</div>
+                        </div>
+                        <div class="space-y-3">
+                            <button type="button" class="w-full social-login-button-facebook text-white font-medium py-2.5 px-4 rounded-md flex items-center justify-center hover:opacity-90"><i class="fab fa-facebook-f mr-2"></i> LOGIN IN</button>
+                            <button type="button" class="w-full social-login-button-google text-white font-medium py-2.5 px-4 rounded-md flex items-center justify-center hover:opacity-90"><i class="fab fa-google mr-2"></i> LOGIN IN</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="w-full md:w-1/2 p-6 sm:p-8 rounded-lg shadow-lg form-container">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">SIGN IN</h2>
+                    <div class="mb-4 flex rounded-md shadow-sm">
+                        <button class="flex-1 px-4 py-2 border border-r-0 rounded-l-md focus:outline-none login-tab-active"><i class="fab fa-facebook-f"></i></button>
+                        <button class="flex-1 px-4 py-2 border rounded-r-md focus:outline-none login-tab-inactive"><i class="fab fa-google"></i></button>
+                    </div>
+                    <form id="signUpForm" action="#" method="POST">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <div><label for="signup-lastname" class="block text-sm font-medium text-gray-700 mb-1">LAST NAME</label><input type="text" name="signup-lastname" id="signup-lastname" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500"></div>
+                            <div><label for="signup-firstname" class="block text-sm font-medium text-gray-700 mb-1">FIRST NAME</label><input type="text" name="signup-firstname" id="signup-firstname" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="signup-phone-input" class="block text-sm font-medium text-gray-700 mb-1">PHONE NUMBER</label>
+                            <div class="flex">
+                                <div class="relative">
+                                    <button type="button" id="signupCountryCodeButton" class="country-code-button inline-flex items-center justify-center px-3 py-2.5 rounded-l-md border border-r-0 border-amber-400 bg-amber-100 text-gray-700 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500">
+                                        <span class="country-flag">🇭🇰</span><span>+852</span><i class="fas fa-chevron-down ml-2 text-xs"></i>
+                                    </button>
+                                    <div id="signupCountryCodeDropdown" class="country-code-dropdown hidden absolute z-10 mt-1 w-auto min-w-max bg-white rounded-md shadow-lg border border-amber-200"></div>
+                                </div>
+                                <input type="tel" name="signup-phone" id="signup-phone-input" class="form-input flex-1 block w-full rounded-none rounded-r-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500" placeholder="Enter phone number">
+                            </div>
+                        </div>
+                        <div class="mb-4"><label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">SET PASSWORD</label><input type="password" name="signup-password" id="signup-password" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500"><p class="mt-1 text-xs text-gray-500">MIN 8 CHARACTERS INCLUDING LETTERS AND DIGITS</p></div>
+                        <div class="mb-4"><label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">EMAIL ADDRESS</label><input type="email" name="signup-email" id="signup-email" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500"><p class="mt-1 text-xs text-gray-500">(OPTIONAL) FOR RECEIVING ORDER INFO BY EMAIL</p></div>
+                        <div class="mb-4"><label for="referral-code" class="block text-sm font-medium text-gray-700 mb-1">REFERRAL CODE <span class="text-xs text-gray-500">(OPTIONAL)</span></label><input type="text" name="referral-code" id="referral-code" class="form-input block w-full rounded-md sm:text-sm p-2.5 focus:ring-amber-500 focus:border-amber-500"></div>
+                        <div class="mb-4 space-y-2">
+                            <div class="flex items-center"><input id="agree-terms" name="agree-terms" type="checkbox" class="h-4 w-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"><label for="agree-terms" class="ml-2 block text-xs text-gray-700">I HAVE READ AND AGREE TO THE TERMS OF USE AND PRIVACY POLICY</label></div>
+                            <div class="flex items-center"><input id="agree-marketing" name="agree-marketing" type="checkbox" class="h-4 w-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"><label for="agree-marketing" class="ml-2 block text-xs text-gray-700">AGREE TO THE COLLECTION AND USE OF MY DATA AS DESCRIBED IN THE PRIVACY POLICY</label></div>
+                        </div>
+                        <div class="mb-6 flex justify-center"><div class="w-full max-w-xs p-4 border border-gray-300 rounded-md bg-gray-50 text-center text-gray-500">I'm not a robot (reCAPTCHA placeholder)<span class="block text-xs mt-1">reCAPTCHA</span></div></div>
+                        <button type="submit" class="w-full bg-accent-gold hover:bg-accent-gold-dark text-white font-semibold py-2.5 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">REGISTER</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 mt-12"><div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center"><p>&copy; 2025 Hi-TV Collection. All rights reserved.</p></div></footer>
+
+    <script>
+        // Login form tab switcher
+        const loginPhoneTab = document.getElementById('loginPhoneTab');
+        const loginEmailTab = document.getElementById('loginEmailTab');
+        const phoneLoginGroup = document.getElementById('phoneLoginGroup');
+        const emailLoginGroup = document.getElementById('emailLoginGroup');
+
+        if (loginPhoneTab) {
+            loginPhoneTab.addEventListener('click', () => {
+                if (phoneLoginGroup) phoneLoginGroup.classList.remove('hidden');
+                if (emailLoginGroup) emailLoginGroup.classList.add('hidden');
+                loginPhoneTab.classList.replace('login-tab-inactive', 'login-tab-active');
+                loginEmailTab.classList.replace('login-tab-active', 'login-tab-inactive');
+            });
+        }
+        if (loginEmailTab) {
+            loginEmailTab.addEventListener('click', () => {
+                if (emailLoginGroup) emailLoginGroup.classList.remove('hidden');
+                if (phoneLoginGroup) phoneLoginGroup.classList.add('hidden');
+                loginEmailTab.classList.replace('login-tab-inactive', 'login-tab-active');
+                loginPhoneTab.classList.replace('login-tab-active', 'login-tab-inactive');
+            });
+        }
+
+        // Country Code Selector Logic
+        const countries = [
+            { name: 'Hong Kong', code: '+852', flag: '🇭🇰' }, { name: 'China', code: '+86', flag: '🇨🇳' },
+            { name: 'Taiwan', code: '+886', flag: '🇹🇼' }, { name: 'UK', code: '+44', flag: '🇬🇧' }
+        ];
+
+        function setupCountryCodeSelector(buttonId, dropdownId) {
+            const countryCodeButton = document.getElementById(buttonId);
+            const countryCodeDropdown = document.getElementById(dropdownId);
+            if (!countryCodeButton || !countryCodeDropdown) return;
+            countries.forEach(country => {
+                const option = document.createElement('a');
+                option.href = '#';
+                option.classList.add('block', 'px-4', 'py-2', 'text-sm', 'text-gray-700', 'hover:bg-amber-100', 'flex', 'items-center');
+                option.dataset.code = country.code; option.dataset.flag = country.flag;
+                const flagSpan = document.createElement('span');
+                flagSpan.classList.add('country-flag'); flagSpan.textContent = country.flag; option.appendChild(flagSpan);
+                const textSpan = document.createElement('span');
+                textSpan.textContent = `${country.name} (${country.code})`; option.appendChild(textSpan);
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedFlag = countryCodeButton.querySelector('.country-flag');
+                    const selectedCodeSpan = countryCodeButton.querySelector('span:not(.country-flag)');
+                    if (selectedFlag) selectedFlag.textContent = country.flag;
+                    if (selectedCodeSpan) selectedCodeSpan.textContent = country.code;
+                    countryCodeDropdown.classList.add('hidden');
+                });
+                countryCodeDropdown.appendChild(option);
+            });
+            countryCodeButton.addEventListener('click', (event) => {
+                countryCodeDropdown.classList.toggle('hidden'); event.stopPropagation();
+            });
+        }
+        setupCountryCodeSelector('loginCountryCodeButton', 'loginCountryCodeDropdown');
+        setupCountryCodeSelector('signupCountryCodeButton', 'signupCountryCodeDropdown');
+
+        document.addEventListener('click', (event) => {
+            const loginDropdown = document.getElementById('loginCountryCodeDropdown');
+            const signupDropdown = document.getElementById('signupCountryCodeDropdown');
+            const loginButton = document.getElementById('loginCountryCodeButton');
+            const signupButton = document.getElementById('signupCountryCodeButton');
+            if (loginDropdown && !loginDropdown.classList.contains('hidden') && !loginButton.contains(event.target) && !loginDropdown.contains(event.target)) { loginDropdown.classList.add('hidden'); }
+            if (signupDropdown && !signupDropdown.classList.contains('hidden') && !signupButton.contains(event.target) && !signupDropdown.contains(event.target)) { signupDropdown.classList.add('hidden'); }
+        });
+
+        // --- Handle Login Form Submission ---
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent actual form submission
+
+                // For demonstration, we'll use a fixed username.
+                // In a real app, you might get this from a form field if login is by username,
+                // or generate a display name based on email/phone.
+                const loggedInUserName = "Jack"; // Default for simulation
+
+                // Simulate successful login: Store login state and username in localStorage
+                localStorage.setItem('isUserLoggedIn', 'true');
+                localStorage.setItem('userName', loggedInUserName);
+
+                // Redirect to home page after "login"
+                window.location.href = 'home.html'; 
+            });
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+

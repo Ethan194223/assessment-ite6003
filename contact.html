@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Hi-TV Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Tailwind gray-50, very light */
+        }
+        .accent-gold { color: #D97706; }
+        .bg-accent-gold { background-color: #D97706; }
+        .hover\:bg-accent-gold-dark:hover { background-color: #B45309; }
+        .border-accent-gold { border-color: #D97706; }
+
+        .contact-title {
+            font-size: 2.5rem; 
+            font-weight: 700;
+            color: #1f2937; /* gray-800 */
+            margin-bottom: 0.75rem;
+        }
+        .contact-intro-text {
+            font-size: 0.9rem;
+            color: #4b5563; /* gray-600 */
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .contact-email-text {
+            font-size: 0.9rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+        .contact-form label {
+            display: block;
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 600; /* font-semibold */
+            color: #4b5563; /* gray-600 */
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.375rem; /* rounded-md */
+            background-color: #f3f4f6; /* gray-100 */
+            font-size: 0.875rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        .contact-form input[type="text"]:focus,
+        .contact-form input[type="email"]:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #D97706; /* accent-gold */
+            box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2); /* focus ring */
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-form-button {
+            background-color: #d1d5db; /* gray-300 */
+            color: #4b5563; /* gray-600 */
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+        .contact-form-button:hover {
+            background-color: #9ca3af; /* gray-400 */
+            color: #1f2937;
+        }
+        .top-action-buttons button {
+            background-color: #D1D5DB; /* gray-300 default */
+            color: #374151; /* gray-700 default */
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600; /* font-semibold */
+            font-size: 0.875rem;
+            transition: background-color 0.2s, color 0.2s;
+            border: 2px solid transparent;
+        }
+        .top-action-buttons button.active-button {
+            background-color: #8c5a32; /* Dark red/brown from screenshot for active */
+            color: white;
+            border-color: #704828; /* Darker border for active */
+        }
+        .top-action-buttons button:not(.active-button):hover {
+            background-color: #E5E7EB; /* gray-200 for hover on inactive */
+        }
+
+        /* FAQ View Styles */
+        .faq-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem; 
+            margin-top: 2rem;
+        }
+        .faq-category-box {
+            background-color: white;
+            border: 1px solid #D1D5DB; 
+            border-radius: 0.75rem; 
+            padding: 1.5rem; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .faq-category-box-header { 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .faq-category-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .faq-category-box .icon-text-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .faq-category-box .icon {
+            font-size: 1.75rem; 
+            color: #8c5a32; 
+            margin-right: 1rem; 
+            width: 40px; 
+            text-align: center;
+        }
+        .faq-category-box .text-content .title {
+            font-size: 1rem; 
+            font-weight: 600; 
+            color: #1f2937; 
+        }
+        .faq-category-box .text-content .subtitle {
+            font-size: 0.875rem; 
+            color: #6b7280; 
+        }
+        .faq-category-box .arrow-icon {
+            font-size: 1rem;
+            color: #9ca3af; 
+            transition: transform 0.3s ease-in-out;
+        }
+        .faq-category-box.open .arrow-icon {
+            transform: rotate(90deg);
+        }
+        .vip-icon-text { 
+            font-family: 'Georgia', serif; 
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #8c5a32;
+            line-height: 1;
+        }
+        .faq-submenu {
+            display: none; 
+            margin-top: 1rem;
+            background-color: #A0522D; 
+            border-radius: 0 0 0.75rem 0.75rem; 
+            margin-left: -1.5rem; 
+            margin-right: -1.5rem;
+            margin-bottom: -1.5rem; 
+            padding: 1rem 1.5rem 1rem calc(40px + 2.5rem); /* Adjusted left padding */
+        }
+        .faq-category-box.open .faq-submenu {
+            display: block;
+        }
+        .faq-submenu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        /* Individual Question Item Styling */
+        .faq-question-item {
+            margin-bottom: 0.5rem;
+        }
+        .faq-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            color: #f3e9dc; /* Light text for dark background */
+            font-size: 0.875rem;
+        }
+        .faq-question-header:hover {
+            color: #ffffff;
+        }
+        .faq-question-header .arrow-icon {
+            font-size: 0.8em;
+            color: #f3e9dc;
+            transition: transform 0.3s ease-in-out;
+        }
+        .faq-question-item.open .faq-question-header .arrow-icon {
+            transform: rotate(90deg);
+        }
+        .faq-answer {
+            display: none;
+            padding: 0.75rem 0 0.75rem 1rem; /* Indent answer slightly */
+            font-size: 0.8rem;
+            color: #f3e9dc; /* Light text for dark background */
+            line-height: 1.6;
+            border-left: 2px solid #c79a69; /* Accent line for answer */
+            margin-left: -1rem; /* Align with question text, adjust as needed */
+            padding-left: 1rem;
+        }
+        .faq-question-item.open .faq-answer {
+            display: block;
+        }
+
+
+        /* User & Cart Dropdown Styles */
+        .user-dropdown-container { min-width: 260px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; }
+        .user-dropdown-container .main-menu-link, .user-dropdown-container .sign-out-button { display: flex; align-items: center; justify-content: space-between; padding: 0.625rem 1rem; font-size: 0.875rem; color: #374151; transition: background-color 0.2s ease-in-out; text-decoration: none; width: 100%; box-sizing: border-box; }
+        .user-dropdown-container .main-menu-link:hover, .user-dropdown-container .sign-out-button:hover { background-color: #FDE68A; }
+        .user-dropdown-container .main-menu-link > span > i:first-child, .user-dropdown-container .sign-out-button > i:first-child { margin-right: 0.75rem; width: 18px; text-align: center; color: #9CA3AF; }
+        .user-dropdown-header { padding: 0.75rem 1rem; font-weight: 600; color: #1f2937; border-bottom: 1px solid #FCD34D; }
+        .user-dropdown-content { padding: 0.5rem 0; }
+        .user-dropdown-container .active-main-link, .main-menu-item-container:hover > .main-menu-link { background-color: #FCD34D !important; color: #1f2937 !important; font-weight: 500; }
+        .user-dropdown-container .active-main-link > span > i, .user-dropdown-container .active-main-link .submenu-arrow, .main-menu-item-container:hover > .main-menu-link > span > i, .main-menu-item-container:hover > .main-menu-link .submenu-arrow { color: #1f2937 !important; }
+        .user-dropdown-container .main-menu-link .submenu-arrow { font-size: 0.65em; color: #9CA3AF; margin-left: auto; transform: scaleX(-1); }
+        .submenu { position: absolute; left: 0; transform: translateX(-100%); top: -1px; margin-left: -1px; min-width: 200px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); z-index: 30; padding: 0.5rem 0; visibility: hidden; opacity: 0; transition: visibility 0s linear 0.1s, opacity 0.1s linear; }
+        .main-menu-item-container:hover > .submenu { visibility: visible; opacity: 1; transition-delay: 0s; }
+        .submenu a { display: block; padding: 0.5rem 1rem; font-size: 0.875rem; color: #374151; white-space: nowrap; text-decoration: none; }
+        .submenu a:hover { background-color: #FDE68A; }
+        .submenu .active-submenu-link { background-color: #FCD34D; color: #1f2937; font-weight: 500; }
+        .user-dropdown-footer { border-top: 1px solid #FCD34D; padding: 0.5rem; }
+        .sign-out-button { width: 100%; text-align: left; }
+
+        .cart-dropdown-container { width: 360px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; }
+        .cart-item { display: flex; align-items: center; padding: 0.75rem; border-bottom: 1px solid #FDE68A; } .cart-item:last-child { border-bottom: none; }
+        .cart-item-image { width: 64px; height: 64px; object-fit: cover; border-radius: 0.375rem; margin-right: 0.75rem; }
+        .cart-item-details { flex-grow: 1; } .cart-item-name { font-size: 0.875rem; font-weight: 500; color: #1f2937; }
+        .cart-item-price { font-size: 0.875rem; color: #D97706; margin-top: 0.25rem; }
+        .cart-item-quantity { display: flex; align-items: center; margin-top: 0.5rem; }
+        .cart-item-quantity button { background-color: #FCD34D; color: #B45309; border: none; width: 24px; height: 24px; border-radius: 9999px; font-weight: bold; cursor: pointer; }
+        .cart-item-quantity span { margin: 0 0.5rem; font-size: 0.875rem; }
+        .cart-item-remove { font-size: 0.75rem; color: #EF4444; background: none; border: none; cursor: pointer; margin-top: 0.25rem; }
+        .cart-item-remove:hover { text-decoration: underline; }
+        .cart-summary { padding: 0.75rem; border-top: 1px solid #FCD34D; }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.75rem; }
+        .checkout-button-link { display: block; width: 100%; background-color: #D97706; color: white !important; text-decoration: none !important; padding: 0.625rem; border-radius: 0.5rem; text-align: center; font-weight: 500; transition: background-color 0.2s; }
+        .checkout-button-link:hover { background-color: #B45309; color: white !important; }
+        .empty-cart-message { padding: 1.5rem; text-align: center; color: #6B7280; }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="home.html" class="text-2xl font-bold accent-gold">Hi-TV</a>
+                </div>
+                <div class="hidden md:flex flex-grow max-w-xl mx-4">
+                    <div class="relative w-full">
+                        <input type="search" placeholder="Search products..." class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                        <button class="absolute inset-y-0 right-0 flex items-center justify-center px-3 bg-accent-gold text-white rounded-r-full hover:bg-accent-gold-dark focus:outline-none"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:accent-gold font-medium">HOME</a>
+                    <a href="shop.html" class="text-gray-700 hover:accent-gold font-medium">SHOP</a>
+                    <a href="about.html" class="text-gray-700 hover:accent-gold font-medium">ABOUT</a>
+                    <a href="contact.html" class="text-amber-600 border-b-2 border-amber-600 font-medium pb-1">CONTACT</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative"> <button id="userMenuButton" class="text-gray-600 hover:accent-gold focus:outline-none"><i class="fas fa-user text-xl"></i></button> <div id="userDropdown" class="absolute right-0 mt-2 shadow-xl z-20 hidden"></div> </div>
+                    <div class="relative"> <button id="cartIconButton" class="text-gray-600 hover:accent-gold relative"><i class="fas fa-shopping-bag text-xl"></i><span id="cartItemCountBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">0</span></button> <div id="cartDropdown" class="absolute right-0 mt-2 shadow-xl z-20 hidden cart-dropdown-container"></div> </div>
+                </div>
+                <div class="md:hidden"> <button id="mobileMenuButton" class="text-gray-600 hover:accent-gold focus:outline-none"><i class="fas fa-bars text-xl"></i></button> </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <nav class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="home.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">HOME</a>
+                <a href="shop.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">SHOP</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">ABOUT</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-amber-600 bg-amber-50">CONTACT</a>
+            </nav>
+            <div class="px-4 pb-3"> <div class="relative w-full"> <input type="search" placeholder="Search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"> <button class="absolute inset-y-0 right-0 flex items-center justify-center px-3 bg-accent-gold text-white rounded-r-full hover:bg-accent-gold-dark focus:outline-none"><i class="fas fa-search"></i></button> </div> </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex justify-end space-x-3 mb-8 top-action-buttons">
+            <button id="helpButton" class="active-button">Help</button>
+            <button id="faqButton">FAQ</button>
+        </div>
+
+        <div id="contactFormView">
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h1 class="contact-title">Contact</h1>
+                    <p class="contact-intro-text">
+                        Please fill out the form below to send us an email.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                    <p class="contact-email-text">
+                        E-mail: <a href="mailto:hello@reallygreatsite.com" class="hover:underline text-amber-600">hello@reallygreatsite.com</a>
+                    </p>
+                </div>
+
+                <div class="contact-form bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                    <form action="#" method="POST">
+                        <div>
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" required>
+                        </div>
+                        <div>
+                            <label for="email">E-mail</label>
+                            <input type="email" name="email" id="email" required>
+                        </div>
+                        <div>
+                            <label for="subject">Subject</label>
+                            <input type="text" name="subject" id="subject" required>
+                        </div>
+                        <div>
+                            <label for="message">Message</label>
+                            <textarea name="message" id="message" rows="5" required></textarea>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="contact-form-button">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="faqView" class="hidden">
+            <div class="faq-category-grid">
+                <div class="faq-category-box"> 
+                    <div class="faq-category-box-header">
+                        <div class="icon-text-wrapper">
+                            <span class="icon"><i class="fas fa-bell"></i></span>
+                            <div class="text-content">
+                                <span class="title">Notice</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="faq-category-box" id="hktvplusAccordion"> 
+                    <div class="faq-category-box-header">
+                        <div class="icon-text-wrapper">
+                            <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                            <div class="text-content">
+                                <span class="title">HKTVplus Membership Program</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow-icon"></i>
+                    </div>
+                    <div class="faq-submenu">
+                        <ul>
+                            <li class="faq-question-item">
+                                <div class="faq-question-header">
+                                    <span>1. What is HKTVplus?</span>
+                                    <i class="fas fa-chevron-down arrow-icon"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>"HKTVplus" is a newly launched membership program. BY registering HKTVplus, members can enjoy the "Plus + Price" for over 500 selected premium products, including staple foods, frozen meat/seafood, baby products/food, and healthcare products. The "Plus + Price" is up to 38% lower than the retail price at major supermarket chains and personal care stores. Some products are even priced at only 28% of the market price, ensuring that HKTVplus members enjoy the "most discounted" shopping experience.</p>
+                                    <p class="mt-2">The HKTVplus membership fee is HK$99 every 3 months, providing the most cost-effective online shopping service. In addition to the discounts on over 500 premium products, HKTVplus also offers various product bundle promotions and exclusive popular product offers, allowing HKTVplus members to "Buy more and save more."</p>
+                                </div>
+                            </li>
+                            <li class="faq-question-item">
+                                <div class="faq-question-header">
+                                   <span>2. How to become a HKTVplus member?</span>
+                                   <i class="fas fa-chevron-down arrow-icon"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Details on how to become a HKTVplus member will be provided here. Check our website or app for the latest information on registration and benefits.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-category-box"> 
+                    <div class="faq-category-box-header">
+                        <div class="icon-text-wrapper">
+                            <span class="icon vip-icon-text">VIP</span> 
+                            <div class="text-content">
+                                <span class="title">new VIP member</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow-icon"></i>
+                    </div>
+                </div>
+                <div class="faq-category-box"> 
+                    <div class="faq-category-box-header">
+                        <div class="icon-text-wrapper">
+                            <span class="icon"><i class="fas fa-globe-americas"></i></span>
+                            <div class="text-content">
+                                <span class="title">Ship to Other Region/Country</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Hi-TV Collection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const cartIconButton = document.getElementById('cartIconButton');
+        const cartDropdown = document.getElementById('cartDropdown');
+        const cartItemCountBadge = document.getElementById('cartItemCountBadge');
+
+        const helpButton = document.getElementById('helpButton');
+        const faqButton = document.getElementById('faqButton');
+        const contactFormView = document.getElementById('contactFormView');
+        const faqView = document.getElementById('faqView');
+
+        let isUserLoggedInContact = localStorage.getItem('isUserLoggedIn') === 'true';
+        let userNameContact = localStorage.getItem('userName') || "Guest";
+
+        function renderUserDropdownContact() {
+            if (!userDropdown) return;
+            userDropdown.innerHTML = ''; 
+            userDropdown.className = 'absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden'; 
+            if (isUserLoggedInContact) {
+                userDropdown.innerHTML = `
+                    <div class="px-4 py-2 text-sm text-gray-700">Hello, ${userNameContact}</div>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Account</a>
+                    <a href="#" id="signOutButtonContact" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>`;
+                const signOutButtonContact = document.getElementById('signOutButtonContact');
+                if (signOutButtonContact) {
+                    signOutButtonContact.addEventListener('click', () => {
+                        localStorage.removeItem('isUserLoggedIn'); localStorage.removeItem('userName');
+                        isUserLoggedInContact = false; userNameContact = "Guest";
+                        renderUserDropdownContact(); userDropdown.classList.add('hidden');
+                    });
+                }
+            } else {
+                userDropdown.innerHTML = `<a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign In / Log In</a>`;
+            }
+        }
+        
+        if (userMenuButton) { userMenuButton.addEventListener('click', (event) => { renderUserDropdownContact(); userDropdown.classList.toggle('hidden'); event.stopPropagation(); }); }
+        if (mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', (event) => { mobileMenu.classList.toggle('hidden'); event.stopPropagation(); }); }
+
+        let cartItemsContact = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+        function updateCartBadgeContact() {
+            const totalItems = cartItemsContact.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartItemCountBadge) { cartItemCountBadge.textContent = totalItems; cartItemCountBadge.classList.toggle('hidden', totalItems === 0); }
+        }
+        function renderCartDropdownContact() {
+            if (!cartDropdown) return;
+            cartDropdown.innerHTML = '';
+            cartDropdown.className = 'cart-dropdown-container absolute right-0 mt-2 shadow-xl z-20 hidden p-4';
+            if (cartItemsContact.length === 0) { cartDropdown.innerHTML = '<p class="empty-cart-message">Your cart is empty.</p>'; return; }
+            let total = 0;
+            cartItemsContact.forEach(item => {
+                total += item.price * item.quantity;
+                const itemHTML = `
+                    <div class="cart-item">
+                        <img src="${item.image || 'https://placehold.co/64x64/ccc/fff?text=No+Img'}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)} (x${item.quantity})</div>
+                        </div>
+                    </div>`;
+                cartDropdown.innerHTML += itemHTML;
+            });
+            cartDropdown.innerHTML += `<div class="cart-summary">
+                <div class="cart-total"><span>Total:</span><span>$${total.toFixed(2)}</span></div>
+                <a href="check pay.html" class="checkout-button-link">Checkout</a>
+                </div>`;
+        }
+        if (cartIconButton) { cartIconButton.addEventListener('click', (event) => { renderCartDropdownContact(); cartDropdown.classList.toggle('hidden'); event.stopPropagation(); }); }
+        
+        document.addEventListener('click', function(event) {
+            if (userDropdown && !userDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) { userDropdown.classList.add('hidden'); }
+            if (cartDropdown && !cartDropdown.classList.contains('hidden') && !cartIconButton.contains(event.target) && !cartDropdown.contains(event.target)) { cartDropdown.classList.add('hidden'); }
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) { mobileMenu.classList.add('hidden'); }
+        });
+
+        const contactForm = document.querySelector('.contact-form form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                alert('Thank you for your message! (This is a demo - no email was sent)');
+                contactForm.reset(); 
+            });
+        }
+
+        // View Toggling for Contact/FAQ
+        if (helpButton && faqButton && contactFormView && faqView) {
+            helpButton.addEventListener('click', () => {
+                contactFormView.classList.remove('hidden');
+                faqView.classList.add('hidden');
+                helpButton.classList.add('active-button');
+                faqButton.classList.remove('active-button');
+            });
+
+            faqButton.addEventListener('click', () => {
+                contactFormView.classList.add('hidden');
+                faqView.classList.remove('hidden');
+                faqButton.classList.add('active-button');
+                helpButton.classList.remove('active-button');
+            });
+        }
+
+        // Accordion for Main FAQ Categories (e.g., HKTVplus Membership Program)
+        const accordionItems = document.querySelectorAll('.faq-category-box[id]'); // Select only those with IDs for now
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.faq-category-box-header');
+            if (header) { // Ensure header exists
+                 header.addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            }
+        });
+
+        // Accordion for individual questions within a submenu
+        const questionItems = document.querySelectorAll('.faq-question-item');
+        questionItems.forEach(item => {
+            const header = item.querySelector('.faq-question-header');
+            if (header) {
+                header.addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            }
+        });
+
+        // Initial load
+        updateCartBadgeContact();
+        renderUserDropdownContact(); 
+    </script>
+</body>
+</html>
+
+
+

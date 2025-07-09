@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi-TV Collection - Tailwind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        /* Custom accent color classes */
+        .accent-gold { color: #D97706; }
+        .bg-accent-gold { background-color: #D97706; }
+        .hover\:bg-accent-gold-dark:hover { background-color: #B45309; }
+        .border-accent-gold { border-color: #D97706; }
+
+        /* User Dropdown Styles */
+        .user-dropdown-container { min-width: 260px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; }
+        .user-dropdown-container .main-menu-link, .user-dropdown-container .sign-out-button { display: flex; align-items: center; justify-content: space-between; padding: 0.625rem 1rem; font-size: 0.875rem; color: #374151; transition: background-color 0.2s ease-in-out; text-decoration: none; width: 100%; box-sizing: border-box; }
+        .user-dropdown-container .main-menu-link:hover, .user-dropdown-container .sign-out-button:hover { background-color: #FDE68A; }
+        .user-dropdown-container .main-menu-link > span > i:first-child, .user-dropdown-container .sign-out-button > i:first-child { margin-right: 0.75rem; width: 18px; text-align: center; color: #9CA3AF; }
+        .user-dropdown-header { padding: 0.75rem 1rem; font-weight: 600; color: #1f2937; border-bottom: 1px solid #FCD34D; }
+        .user-dropdown-content { padding: 0.5rem 0; }
+        .user-dropdown-container .active-main-link, .main-menu-item-container:hover > .main-menu-link { background-color: #FCD34D !important; color: #1f2937 !important; font-weight: 500; }
+        .user-dropdown-container .active-main-link > span > i, .user-dropdown-container .active-main-link .submenu-arrow, .main-menu-item-container:hover > .main-menu-link > span > i, .main-menu-item-container:hover > .main-menu-link .submenu-arrow { color: #1f2937 !important; }
+        .user-dropdown-container .main-menu-link .submenu-arrow { font-size: 0.65em; color: #9CA3AF; margin-left: auto; transform: scaleX(-1); }
+        .submenu { position: absolute; left: 0; transform: translateX(-100%); top: -1px; margin-left: -1px; min-width: 200px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); z-index: 30; padding: 0.5rem 0; visibility: hidden; opacity: 0; transition: visibility 0s linear 0.1s, opacity 0.1s linear; }
+        .main-menu-item-container:hover > .submenu { visibility: visible; opacity: 1; transition-delay: 0s; }
+        .submenu a { display: block; padding: 0.5rem 1rem; font-size: 0.875rem; color: #374151; white-space: nowrap; text-decoration: none; }
+        .submenu a:hover { background-color: #FDE68A; }
+        .submenu .active-submenu-link { background-color: #FCD34D; color: #1f2937; font-weight: 500; }
+        .user-dropdown-footer { border-top: 1px solid #FCD34D; padding: 0.5rem; }
+        .sign-out-button { width: 100%; text-align: left; }
+
+        /* Cart Dropdown Styles */
+        .cart-dropdown-container { width: 360px; background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 0.75rem; }
+        .cart-item { display: flex; align-items: center; padding: 0.75rem; border-bottom: 1px solid #FDE68A; } .cart-item:last-child { border-bottom: none; }
+        .cart-item-image { width: 64px; height: 64px; object-fit: cover; border-radius: 0.375rem; margin-right: 0.75rem; }
+        .cart-item-details { flex-grow: 1; } .cart-item-name { font-size: 0.875rem; font-weight: 500; color: #1f2937; }
+        .cart-item-price { font-size: 0.875rem; color: #D97706; margin-top: 0.25rem; }
+        .cart-item-quantity { display: flex; align-items: center; margin-top: 0.5rem; }
+        .cart-item-quantity button { background-color: #FCD34D; color: #B45309; border: none; width: 24px; height: 24px; border-radius: 9999px; font-weight: bold; cursor: pointer; }
+        .cart-item-quantity span { margin: 0 0.5rem; font-size: 0.875rem; }
+        .cart-item-remove { font-size: 0.75rem; color: #EF4444; background: none; border: none; cursor: pointer; margin-top: 0.25rem; }
+        .cart-item-remove:hover { text-decoration: underline; }
+        .cart-summary { padding: 0.75rem; border-top: 1px solid #FCD34D; }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 600; color: #1f2937; margin-bottom: 0.75rem; }
+        .checkout-button-link { display: block; width: 100%; background-color: #D97706; color: white !important; text-decoration: none !important; padding: 0.625rem; border-radius: 0.5rem; text-align: center; font-weight: 500; transition: background-color 0.2s; }
+        .checkout-button-link:hover { background-color: #B45309; color: white !important; }
+        .empty-cart-message { padding: 1.5rem; text-align: center; color: #6B7280; }
+
+        /* SHOP Mega Menu Styles - Updated Colors & Layout */
+        .shop-nav-item .mega-menu {
+            opacity: 0; visibility: hidden; position: absolute; left: 0; top: 100%; width: auto;
+            min-width: 550px; 
+            background-color: #FFFBEB; /* Light beige background for main dropdown */
+            border: 1px solid #FCD34D; /* Amber border */
+            border-radius: 0.75rem; box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 40; padding: 1.5rem; display: flex; gap: 2rem;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+        }
+        .shop-nav-item .mega-menu.mega-menu-active,
+        .shop-nav-item:hover .mega-menu { opacity: 1; visibility: visible; }
+
+        .mega-menu-column { flex: 1; }
+        .mega-menu-column .category-group { margin-bottom: 1.5rem; }
+        .mega-menu-column .category-group:last-child { margin-bottom: 0; }
+        .mega-menu-column h4 { 
+            font-size: 0.9rem; font-weight: 600; 
+            color: #B45309; 
+            margin-bottom: 0.75rem; display: flex; align-items: center; 
+        }
+        .mega-menu-column h4 i { font-size: 0.8em; margin-right: 0.5rem; color: #D97706; }
+        .mega-menu-column ul { list-style: none; padding: 0; margin: 0; }
+        .mega-menu-column ul li { position: relative; }
+        .mega-menu-column ul li a { 
+            display: block; padding: 0.4rem 0; font-size: 0.875rem; 
+            color: #374151; 
+            text-decoration: none; border-radius: 0.25rem; transition: color 0.2s ease-in-out; 
+        }
+        .mega-menu-column ul li a:hover { color: #D97706; }
+        .mega-menu-column .category-group:not(:last-child)::after { 
+            content: ''; display: block; height: 1px; 
+            background-color: #FDE68A; 
+            margin-top: 1.5rem; 
+        }
+
+        /* Chevron for items with flyouts */
+        .has-submenu-l2 > a, .has-submenu-l3 > a { display: flex; justify-content: space-between; align-items: center; }
+        .has-submenu-l2 > a::after, .has-submenu-l3 > a::after {
+            content: '\f053'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            font-size: 0.7em; margin-left: 0.5rem; 
+        }
+        .mega-menu-column ul li.has-submenu-l2 > a::after { color: #374151; }
+        .mega-menu-column ul li.has-submenu-l2:hover > a::after { color: #D97706; }
+        .mega-menu-submenu-l2 li.has-submenu-l3 > a::after { color: #333; }
+        .mega-menu-submenu-l2 li.has-submenu-l3:hover > a::after { color: #000; }
+
+
+        /* Level 2 Flyout (Supermarket items - light grey background, opens to the LEFT) */
+        .mega-menu-submenu-l2 {
+            display: none; position: absolute; 
+            right: 100%; 
+            top: -1px; 
+            min-width: 320px; max-height: calc(100vh - 120px);
+            overflow-y: auto; 
+            background-color: #f0f0f0; 
+            border-radius: 0.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 45; padding: 1rem; border: 1px solid #e0e0e0;
+        }
+        .has-submenu-l2:hover > .mega-menu-submenu-l2 { display: block; }
+        .mega-menu-submenu-l2 li { position: relative; }
+        .mega-menu-submenu-l2 li a { color: #333333; font-size: 0.85rem; padding: 0.5rem 0.75rem; border-radius: 0.25rem; }
+        .mega-menu-submenu-l2 li a:hover { background-color: #e0e0e0; color: #000000; }
+        .mega-menu-submenu-l2 li.has-submenu-l3:hover > a,
+        .mega-menu-submenu-l2 li.has-submenu-l3 > a:focus { 
+             background-color: #d1d5db; 
+             font-weight: 500; 
+        }
+
+
+        /* Level 3 Flyout (Beverage items - DARK AMBER background, opens to the LEFT) */
+        .mega-menu-submenu-l3 {
+            display: none; 
+            position: absolute; 
+            right: 100%; 
+            top: -1px; 
+            min-width: 280px; 
+            max-height: calc(100vh - 120px);
+            overflow-y: auto; 
+            background-color: #b17544; /* Dark amber background */
+            border-radius: 0.5rem; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 55; 
+            padding: 1rem; 
+            border: 1px solid #c79a69; 
+        }
+        .has-submenu-l3:hover > .mega-menu-submenu-l3 { 
+            display: block; 
+        }
+        .mega-menu-submenu-l3 li a { 
+            color: #f3e9dc; 
+            font-size: 0.85rem; padding: 0.5rem 0.75rem; 
+            border-radius: 0.25rem;
+        }
+        .mega-menu-submenu-l3 li a:hover { 
+            color: #ffffff; background-color: #c79a69; 
+        }
+
+        .shop-nav-item > a.active-shop-link,
+        .shop-nav-item:hover > a { color: #D97706; border-bottom-color: #D97706; }
+    </style>
+</head>
+<body>
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="home.html">
+                        <img src="HKTVmall_logo.jpeg" alt="HKTVmall Logo" class="h-10 object-contain"> </a>
+                </div>
+                <div class="hidden md:flex flex-grow max-w-xl mx-4">
+                    <div class="relative w-full">
+                        <input type="search" placeholder="Search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                        <button class="absolute inset-y-0 right-0 flex items-center justify-center px-3 bg-accent-gold text-white rounded-r-full hover:bg-accent-gold-dark focus:outline-none"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:accent-gold font-medium border-b-2 border-amber-600 pb-1">HOME</a>
+                    <div class="relative shop-nav-item">
+                        <a href="shop.html" id="shopMenuLink" class="text-gray-700 hover:accent-gold font-medium border-b-2 border-transparent hover:border-accent-gold pb-1 flex items-center">
+                            SHOP <i class="fas fa-chevron-down text-xs ml-1"></i>
+                        </a>
+                        <div id="shopMegaMenuContainer" class="mega-menu">
+                            <div class="mega-menu-column">
+                                <div class="category-group">
+                                    <h4><i class="fas fa-shapes"></i>Daily Essentials</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=household-goods&parent=daily-essentials">Household Goods</a></li>
+                                        <li><a href="shop.html?category=home-appliances&parent=daily-essentials">Home Appliances</a></li>
+                                        <li class="has-submenu-l2">
+                                            <a href="shop.html?category=supermarket&parent=daily-essentials">Supermarket</a>
+                                            <ul class="mega-menu-submenu-l2">
+                                                <li><a href="shop.html?category=featured-promotions&parent=supermarket&grandparent=daily-essentials">1. Featured Promotions</a></li>
+                                                <li><a href="shop.html?category=fruits-vegetables&parent=supermarket&grandparent=daily-essentials">2. Fruits, Vegetables, Fresh Flowers</a></li>
+                                                <li><a href="shop.html?category=frozen-foods&parent=supermarket&grandparent=daily-essentials">3. Frozen/Quick-Frozen Foods</a></li>
+                                                <li><a href="shop.html?category=eggs&parent=supermarket&grandparent=daily-essentials">4. Eggs</a></li>
+                                                <li><a href="shop.html?category=snacks-sweets&parent=supermarket&grandparent=daily-essentials">5. Snacks & Sweets</a></li>
+                                                <li class="has-submenu-l3">
+                                                    <a href="shop.html?category=beverages-drinks&parent=supermarket&grandparent=daily-essentials">6. Beverages & Instant Drinks</a>
+                                                    <ul class="mega-menu-submenu-l3">
+                                                        <li><a href="shop.html?category=water&parent=beverages-drinks&grandparent=supermarket">Water</a></li>
+                                                        <li><a href="shop.html?category=sports-drinks&parent=beverages-drinks&grandparent=supermarket">Sports Drinks</a></li>
+                                                        <li><a href="shop.html?category=soft-drinks&parent=beverages-drinks&grandparent=supermarket">Soft Drinks/Soda</a></li>
+                                                        <li><a href="shop.html?category=juice&parent=beverages-drinks&grandparent=supermarket">Juice</a></li>
+                                                        <li><a href="shop.html?category=sugar-free-drinks&parent=beverages-drinks&grandparent=supermarket">Sugar-Free Drinks</a></li>
+                                                        <li><a href="shop.html?category=milk-soy&parent=beverages-drinks&grandparent=supermarket">Milk/Soy Milk</a></li>
+                                                        <li><a href="shop.html?category=instant-milk-tea&parent=beverages-drinks&grandparent=supermarket">Instant Milk Tea</a></li>
+                                                        <li><a href="shop.html?category=instant-coffee&parent=beverages-drinks&grandparent=supermarket">Instant Coffee</a></li>
+                                                        <li><a href="shop.html?category=tea-drinks&parent=beverages-drinks&grandparent=supermarket">Tea Drinks</a></li>
+                                                        <li><a href="shop.html?category=bottled-canned-tea&parent=beverages-drinks&grandparent=supermarket">Bottled/Canned Tea</a></li>
+                                                        <li><a href="shop.html?category=milk-powder&parent=beverages-drinks&grandparent=supermarket">Milk Powder/Creamer/Beverage Powder</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="shop.html?category=alcoholic-beverages&parent=supermarket&grandparent=daily-essentials">7. Alcoholic Beverages</a></li>
+                                                <li><a href="shop.html?category=noodles-pasta&parent=supermarket&grandparent=daily-essentials">8. Instant Noodles, Pasta</a></li>
+                                                <li><a href="shop.html?category=rice-oil&parent=supermarket&grandparent=daily-essentials">9. Rice & Cooking Oil</a></li>
+                                                <li><a href="shop.html?category=seasonings-sauces&parent=supermarket&grandparent=daily-essentials">10. Seasonings & Sauces</a></li>
+                                                <li><a href="shop.html?category=soups-cooked-food&parent=supermarket&grandparent=daily-essentials">11. Soups, Cooked Food, Fermented Products</a></li>
+                                                <li><a href="shop.html?category=canned-preserved&parent=supermarket&grandparent=daily-essentials">12. Canned Food, Mushrooms, Seaweed, Preserved Goods</a></li>
+                                                <li><a href="shop.html?category=breakfast-jams&parent=supermarket&grandparent=daily-essentials">13. Breakfast Items & Jams</a></li>
+                                                <li><a href="shop.html?category=organic-health-food&parent=supermarket&grandparent=daily-essentials">14. Organic & Health Foods</a></li>
+                                                <li><a href="shop.html?category=pharmaceutical&parent=supermarket&grandparent=daily-essentials">15. Pharmaceutical Products</a></li>
+                                                <li><a href="shop.html?category=meal-coupons&parent=supermarket&grandparent=daily-essentials">16. Meal Coupons & Festive Foods</a></li>
+                                                <li><a href="shop.html?category=paper-disposable&parent=supermarket&grandparent=daily-essentials">17. Paper Products, Disposable Items, Household Goods</a></li>
+                                                <li><a href="shop.html?category=household-cleaning&parent=supermarket&grandparent=daily-essentials">18. Household Cleaning Products</a></li>
+                                                <li><a href="shop.html?category=personal-care-supermarket&parent=supermarket&grandparent=daily-essentials">19. Personal Care Products</a></li>
+                                                <li><a href="shop.html?category=baby-food-supermarket&parent=supermarket&grandparent=daily-essentials">20. Baby Food & Products</a></li>
+                                                <li><a href="shop.html?category=pet-food-supermarket&parent=supermarket&grandparent=daily-essentials">21. Cat & Dog Supplies</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="category-group">
+                                    <h4><i class="fas fa-child-reaching"></i>Family & Kids</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=maternity-baby&parent=family-kids">Maternity & Baby</a></li>
+                                        <li><a href="shop.html?category=toys-books&parent=family-kids">Toys & Books</a></li>
+                                    </ul>
+                                </div>
+                                <div class="category-group">
+                                    <h4><i class="fas fa-laptop-code"></i>Technology</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=computer-zone&parent=technology">Computer Zone</a></li>
+                                    </ul>
+                                </div>
+                                <div class="category-group">
+                                    <h4><i class="fas fa-plane-departure"></i>Lifestyle & Travel</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=sports-travel&parent=lifestyle-travel">Sports & Travel</a></li>
+                                        <li><a href="shop.html?category=fashion-accessories&parent=lifestyle-travel">Fashion & Accessories</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mega-menu-column">
+                                <div class="category-group">
+                                    <h4><i class="fas fa-heart-pulse"></i>Personal Care & Health</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=health-nursing&parent=personal-care">Health & Nursing</a></li>
+                                        <li><a href="shop.html?category=skincare-cosmetics&parent=personal-care">Skincare & Cosmetics</a></li>
+                                    </ul>
+                                </div>
+                                <div class="category-group">
+                                    <h4><i class="fas fa-paw"></i>Pets</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=pet-supplies&parent=pets">Pet Supplies</a></li>
+                                    </ul>
+                                </div>
+                                <div class="category-group">
+                                    <h4><i class="fas fa-utensils"></i>Food & Leisure</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=food-fun&parent=food-leisure">Food & Fun</a></li>
+                                    </ul>
+                                </div>
+                                <div class="category-group">
+                                    <h4><i class="fas fa-piggy-bank"></i>Finance</h4>
+                                    <ul>
+                                        <li><a href="shop.html?category=insurance-finances&parent=finance">Insurance & Finances</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="about.html" class="text-gray-700 hover:accent-gold font-medium border-b-2 border-transparent hover:border-accent-gold pb-1">ABOUT</a>
+                    <a href="contact.html" class="text-gray-700 hover:accent-gold font-medium border-b-2 border-transparent hover:border-accent-gold pb-1">CONTACT</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <div class="relative"> <button id="userMenuButton" class="text-gray-600 hover:accent-gold focus:outline-none"><i class="fas fa-user text-xl"></i></button> <div id="userDropdown" class="absolute right-0 mt-2 shadow-xl z-20 hidden"></div> </div>
+                    <div class="relative"> <button id="cartIconButton" class="text-gray-600 hover:accent-gold relative"><i class="fas fa-shopping-bag text-xl"></i><span id="cartItemCountBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">0</span></button> <div id="cartDropdown" class="cart-dropdown-container absolute right-0 mt-2 shadow-xl z-20 hidden"></div> </div>
+                </div>
+                <div class="md:hidden"> <button id="mobileMenuButton" class="text-gray-600 hover:accent-gold focus:outline-none"><i class="fas fa-bars text-xl"></i></button> </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <nav class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="home.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">HOME</a>
+                <a href="shop.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">SHOP</a>
+                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">ABOUT</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-white hover:bg-amber-500">CONTACT</a>
+            </nav>
+            <div class="px-4 pb-3"> <div class="relative w-full"> <input type="search" placeholder="Search" class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"> <button class="absolute inset-y-0 right-0 flex items-center justify-center px-3 bg-accent-gold text-white rounded-r-full hover:bg-accent-gold-dark focus:outline-none"><i class="fas fa-search"></i></button> </div> </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="bg-gray-50" style="background-image: url('https://placehold.co/1200x500/e2e8f0/9ca3af?text=Fashion+Collection+Banner'); background-size: cover; background-position: center;">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-32">
+                <div class="max-w-lg bg-white bg-opacity-80 backdrop-blur-sm p-8 rounded-lg shadow-lg">
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Our New Collection</h1>
+                    <p class="text-gray-600 text-base sm:text-lg mb-6">Pain itself is love. It is the main pain. It is pain itself, but also brings labor and sorrow.</p>
+                    <a href="shop.html" class="inline-block bg-gray-800 text-white font-semibold py-3 px-8 rounded-md hover:bg-gray-700 transition duration-300 text-sm sm:text-base">Shop Now</a>
+                </div>
+            </div>
+        </section>
+        <section id="shop-section-on-page" class="py-12 sm:py-16 lg:py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 text-center mb-8 sm:mb-12">Featured Products</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl"> <div class="aspect-w-4 aspect-h-3 overflow-hidden"> <img src="https://placehold.co/400x300/f3f4f6/9ca3af?text=Beige+Bag" alt="Beige Casual Bag" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f3f4f6/ccc?text=Image+Not+Found';"> </div> <div class="p-4 sm:p-5 text-center"> <h3 class="text-lg font-semibold text-gray-800 mb-1">Beige Casual Bag</h3> <p class="text-xl font-bold accent-gold mb-3">$68.56</p> <button class="add-to-cart-btn w-full sm:w-auto bg-accent-gold text-white py-2 px-6 rounded-full hover:bg-accent-gold-dark transition duration-300 text-sm font-medium" data-id="prod1" data-name="Beige Casual Bag" data-price="68.56" data-image="https://placehold.co/400x300/f3f4f6/9ca3af?text=Beige+Bag"> Add to Cart </button> </div> </div>
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl"> <div class="aspect-w-4 aspect-h-3 overflow-hidden"> <img src="https://placehold.co/400x300/d1d5db/4b5563?text=Woven+Bag" alt="Brown Casual Bag" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/400x300/d1d5db/ccc?text=Image+Not+Found';"> </div> <div class="p-4 sm:p-5 text-center"> <h3 class="text-lg font-semibold text-gray-800 mb-1">Brown Casual Bag</h3> <p class="text-xl font-bold accent-gold mb-3">$68.56</p> <button class="add-to-cart-btn w-full sm:w-auto bg-accent-gold text-white py-2 px-6 rounded-full hover:bg-accent-gold-dark transition duration-300 text-sm font-medium" data-id="prod2" data-name="Brown Casual Bag" data-price="68.56" data-image="https://placehold.co/400x300/d1d5db/4b5563?text=Woven+Bag"> Add to Cart </button> </div> </div>
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl"> <div class="aspect-w-4 aspect-h-3 overflow-hidden"> <img src="https://placehold.co/400x300/fde68a/b45309?text=Orange+Bag" alt="Orange Casual Bag" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/400x300/fde68a/ccc?text=Image+Not+Found';"> </div> <div class="p-4 sm:p-5 text-center"> <h3 class="text-lg font-semibold text-gray-800 mb-1">Orange Casual Bag</h3> <p class="text-xl font-bold accent-gold mb-3">$68.56</p> <button class="add-to-cart-btn w-full sm:w-auto bg-accent-gold text-white py-2 px-6 rounded-full hover:bg-accent-gold-dark transition duration-300 text-sm font-medium" data-id="prod3" data-name="Orange Casual Bag" data-price="68.56" data-image="https://placehold.co/400x300/fde68a/b45309?text=Orange+Bag"> Add to Cart </button> </div> </div>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="py-12 sm:py-16 lg:py-20 bg-amber-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center"> <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">About Us</h2> <p class="text-gray-600 max-w-2xl mx-auto">This is a placeholder for the About Us section. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> </div> </section>
+        <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-white"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center"> <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">Contact Us</h2> <p class="text-gray-600 max-w-xl mx-auto mb-8">Have questions? We'd love to hear from you. Reach out to us via phone, email, or visit our store.</p> <div class="space-y-2 text-gray-700"> <p><i class="fas fa-phone-alt mr-2 accent-gold"></i> +1 (555) 123-4567</p> <p><i class="fas fa-envelope mr-2 accent-gold"></i> support@hitvcollection.com</p> <p><i class="fas fa-map-marker-alt mr-2 accent-gold"></i> 123 Fashion Ave, New York, NY 10001</p> </div> </div> </section>
+        <section id="cart" class="py-12 sm:py-16 lg:py-20 bg-gray-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center"> <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">Your Shopping Cart</h2> <p class="text-gray-600">Your cart is currently empty. <a href="#shop-section-on-page" class="accent-gold hover:underline">Continue shopping!</a></p> </div> </section>
+        <footer class="bg-gray-800 text-gray-300 py-12"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center"> <p>&copy; 2025 Hi-TV Collection. All rights reserved.</p> <p class="text-sm mt-2">Designed with <i class="fas fa-heart text-red-500"></i> using Tailwind CSS</p> </div> </footer>
+    </main>
+
+    <script>
+        // DOM Elements
+        const userMenuButton = document.getElementById('userMenuButton'); const userDropdown = document.getElementById('userDropdown');
+        const mobileMenuButton = document.getElementById('mobileMenuButton'); const mobileMenu = document.getElementById('mobileMenu');
+        const cartIconButton = document.getElementById('cartIconButton'); const cartDropdown = document.getElementById('cartDropdown');
+        const cartItemCountBadge = document.getElementById('cartItemCountBadge');
+        const shopMenuLink = document.getElementById('shopMenuLink'); const shopMegaMenuContainer = document.getElementById('shopMegaMenuContainer');
+
+        // Login State & User Dropdown
+        let isUserLoggedIn = localStorage.getItem('isUserLoggedIn') === 'true'; let userName = localStorage.getItem('userName') || "Guest";
+        const loggedInMenuItems = [ 
+            { 
+                label: "My Account", icon: "fa-user-circle", active: true, 
+                submenu: [ 
+                    { label: "Personal info", href: "personal_info.html" }, // <<< THIS IS THE CORRECTED LINK
+                    { label: "Address", href: "#address" }, 
+                    { label: "e-wallet", href: "#e-wallet" }, 
+                    { label: "Notifications", href: "#notifications" }, 
+                    { label: "Settings", href: "#settings" } 
+                ] 
+            }, 
+            { label: "My order", icon: "fa-box-archive", submenu: [ { label: "Order History", href: "#order-history" }, { label: "Extended Warranty", href: "#extended-warranty" }, { label: "Gift Orders", href: "#gift-orders" } ] }, 
+            { label: "coupons & Rewards", icon: "fa-tags", submenu: [ { label: "e-coupons", href: "#e-coupons" }, { label: "Voucher Code", href: "#voucher-code" }, { label: "VIP Membership", href: "#vip-membership" } ] }, 
+            { label: "Product Reviews", icon: "fa-star", submenu: [ { label: "My Reviews", href: "#my-reviews" } ] } 
+        ];
+        function renderUserDropdown() { if (!userDropdown) return; userDropdown.innerHTML = ''; userDropdown.className = 'absolute right-0 mt-2 shadow-xl z-20 hidden'; if (isUserLoggedIn) { userDropdown.classList.add('user-dropdown-container'); let loggedInHTML = `<div class="user-dropdown-header">Hello! ${userName}</div><div class="user-dropdown-content">`; loggedInMenuItems.forEach(item => { loggedInHTML += `<div class="main-menu-item-container relative group"><a href="#" class="main-menu-link ${item.active ? 'active-main-link' : ''}"><span><i class="fas ${item.icon}"></i>${item.label}</span>${item.submenu && item.submenu.length > 0 ? '<i class="fas fa-chevron-left submenu-arrow"></i>' : ''}</a>`; if (item.submenu && item.submenu.length > 0) { loggedInHTML += `<div class="submenu">`; item.submenu.forEach(subItem => { const isActiveSubmenu = (subItem.href.startsWith("#") && window.location.hash === subItem.href) || (window.location.pathname.endsWith('/' + subItem.href)); loggedInHTML += `<a href="${subItem.href}" class="${isActiveSubmenu ? 'active-submenu-link' : ''}">${subItem.label}</a>`; }); loggedInHTML += `</div>`; } loggedInHTML += `</div>`; }); loggedInHTML += `</div> <div class="user-dropdown-footer"><button id="signOutButton" class="sign-out-button"><i class="fas fa-sign-out-alt"></i> Sign out</button></div>`; userDropdown.innerHTML = loggedInHTML; const signOutButton = document.getElementById('signOutButton'); if (signOutButton) { signOutButton.addEventListener('click', () => { localStorage.removeItem('isUserLoggedIn'); localStorage.removeItem('userName'); isUserLoggedIn = false; userName = "Guest"; renderUserDropdown(); userDropdown.classList.add('hidden'); }); } } else { userDropdown.classList.add('py-2', 'w-48', 'bg-white', 'rounded-md'); userDropdown.innerHTML = `<a href="login.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-500 hover:text-white">Sign In / Log In</a><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-500 hover:text-white">My Account (Guest)</a><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-500 hover:text-white">Track Order</a>`; } }
+        if (userMenuButton && userDropdown) { userMenuButton.addEventListener('click', (event) => { renderUserDropdown(); userDropdown.classList.toggle('hidden'); event.stopPropagation(); }); }
+        if (mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', (event) => { mobileMenu.classList.toggle('hidden'); event.stopPropagation(); }); }
+
+        // Shopping Cart Logic
+        let cartItems = []; function loadCartFromLocalStorage() { const storedCart = localStorage.getItem('shoppingCart'); cartItems = storedCart ? JSON.parse(storedCart) : []; updateCartBadge(); if (cartDropdown && !cartDropdown.classList.contains('hidden')) renderCartDropdown(); } function saveCartToLocalStorage() { localStorage.setItem('shoppingCart', JSON.stringify(cartItems)); } function updateCartBadge() { const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0); if (cartItemCountBadge) { cartItemCountBadge.textContent = totalItems; cartItemCountBadge.classList.toggle('hidden', totalItems === 0); } } function addToCart(productId, productName, productPrice, productImage) { const existingItemIndex = cartItems.findIndex(item => item.id === productId); if (existingItemIndex > -1) cartItems[existingItemIndex].quantity++; else cartItems.push({ id: productId, name: productName, price: parseFloat(productPrice), image: productImage, quantity: 1 }); saveCartToLocalStorage(); updateCartBadge(); if (cartDropdown && !cartDropdown.classList.contains('hidden')) renderCartDropdown(); } function updateCartItemQuantity(productId, change) { const itemIndex = cartItems.findIndex(item => item.id === productId); if (itemIndex > -1) { cartItems[itemIndex].quantity += change; if (cartItems[itemIndex].quantity <= 0) cartItems.splice(itemIndex, 1); saveCartToLocalStorage(); updateCartBadge(); renderCartDropdown(); } } function removeFromCart(productId) { cartItems = cartItems.filter(item => item.id !== productId); saveCartToLocalStorage(); updateCartBadge(); renderCartDropdown(); }
+        function renderCartDropdown() { if (!cartDropdown) return; cartDropdown.innerHTML = ''; if (cartItems.length === 0) { cartDropdown.innerHTML = '<p class="empty-cart-message">Your cart is empty.</p>'; return; } let total = 0; cartItems.forEach(item => { total += item.price * item.quantity; cartDropdown.innerHTML += `<div class="cart-item"><img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.onerror=null;this.src='https://placehold.co/64x64/ccc/fff?text=Img';"><div class="cart-item-details"><div class="cart-item-name">${item.name}</div><div class="cart-item-price">$${item.price.toFixed(2)}</div><div class="cart-item-quantity"><button class="quantity-change" data-id="${item.id}" data-change="-1" aria-label="Decrease quantity of ${item.name}">-</button><span class="px-2" aria-label="Current quantity of ${item.name}">${item.quantity}</span><button class="quantity-change" data-id="${item.id}" data-change="1" aria-label="Increase quantity of ${item.name}">+</button></div></div><button class="cart-item-remove" data-id="${item.id}" aria-label="Remove ${item.name} from cart"><i class="fas fa-times"></i></button></div>`; }); cartDropdown.innerHTML += `<div class="cart-summary"><div class="cart-total"><span>Total:</span><span>$${total.toFixed(2)}</span></div><a href="check pay.html" class="checkout-button-link">Check Pay</a></div>`; cartDropdown.querySelectorAll('.quantity-change').forEach(b => b.addEventListener('click', e => updateCartItemQuantity(e.target.dataset.id, parseInt(e.target.dataset.change)))); cartDropdown.querySelectorAll('.cart-item-remove').forEach(b => b.addEventListener('click', e => removeFromCart(e.target.closest('.cart-item-remove').dataset.id))); }
+        document.querySelectorAll('.add-to-cart-btn').forEach(b => b.addEventListener('click', e => addToCart(e.target.dataset.id, e.target.dataset.name, e.target.dataset.price, e.target.dataset.image)));
+        if (cartIconButton && cartDropdown) { cartIconButton.addEventListener('click', (event) => { renderCartDropdown(); cartDropdown.classList.toggle('hidden'); event.stopPropagation(); }); }
+
+        // SHOP Mega Menu Logic
+        if (shopMenuLink && shopMegaMenuContainer) {
+            shopMenuLink.addEventListener('click', function(event) { 
+                if (shopMenuLink.getAttribute('href') === '#shop-section-on-page' || shopMenuLink.getAttribute('href') === '#') {
+                    // event.preventDefault(); // Allow navigation to shop.html
+                }
+                shopMegaMenuContainer.classList.toggle('mega-menu-active'); 
+                shopMenuLink.classList.toggle('active-shop-link'); 
+                event.stopPropagation(); 
+            });
+            shopMegaMenuContainer.querySelectorAll('a').forEach(link => { 
+                link.addEventListener('click', function() { 
+                    shopMegaMenuContainer.classList.remove('mega-menu-active'); 
+                    shopMenuLink.classList.remove('active-shop-link'); 
+                }); 
+            });
+        }
+
+        // Global click listener to close dropdowns
+        document.addEventListener('click', function(event) {
+            if (userDropdown && !userDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userDropdown.contains(event.target)) { userDropdown.classList.add('hidden'); }
+            if (mobileMenu && !mobileMenu.classList.contains('hidden') && !mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) { mobileMenu.classList.add('hidden'); }
+            if (cartDropdown && !cartDropdown.classList.contains('hidden') && !cartIconButton.contains(event.target) && !cartDropdown.contains(event.target)) { cartDropdown.classList.add('hidden'); }
+            if (shopMegaMenuContainer && shopMegaMenuContainer.classList.contains('mega-menu-active')) { if (!shopMenuLink.contains(event.target) && !shopMegaMenuContainer.contains(event.target)) { shopMegaMenuContainer.classList.remove('mega-menu-active'); shopMenuLink.classList.remove('active-shop-link'); } }
+        });
+
+        // Fallback for product images
+        const productImages = document.querySelectorAll('.bg-white.border.border-gray-200.rounded-lg img');
+        productImages.forEach(img => { img.onerror = function() { this.onerror = null; let placeholderText = 'Image+Not+Found'; if (this.alt) placeholderText = encodeURIComponent(this.alt); const bgColor = this.alt.toLowerCase().includes('beige') ? 'f3f4f6' : this.alt.toLowerCase().includes('woven') ? 'd1d5db' : this.alt.toLowerCase().includes('orange') ? 'fde68a' : 'e0e0e0'; const textColor = '9ca3af'; this.src = `https://placehold.co/${this.offsetWidth || 400}x${this.offsetHeight || 300}/${bgColor}/${textColor}?text=${placeholderText.replace(/\s/g, '+')}`; }; });
+
+        // Smooth scrolling for on-page anchors, allow full page navigation for other links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => { 
+            anchor.addEventListener('click', function (e) { 
+                const hrefAttribute = this.getAttribute('href');
+                if (hrefAttribute.length > 1 && hrefAttribute.startsWith('#')) { // It's an on-page anchor
+                    const targetElement = document.querySelector(hrefAttribute);
+                    if (targetElement) {
+                        e.preventDefault(); 
+                        targetElement.scrollIntoView({ behavior: 'smooth' }); 
+                    }
+                }
+            }); 
+        });
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => { loadCartFromLocalStorage(); renderUserDropdown(); });
+    </script>
+</body>
+</html>
+
+
+
